@@ -45,6 +45,8 @@ void main() async {
     path.dirname(Platform.script.path), ".."
   ));
 
+  print("Script uri: ${Platform.script}");
+  print("Script path: ${Platform.script.path}");
   print("Output dir: $outDir");
   print("Script dir: $scriptDir");
 
