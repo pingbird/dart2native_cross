@@ -127,7 +127,7 @@ Future<void> generateNative({
 
 void printUsage(final ArgParser parser) {
   print('''
-Usage: dart2native <main-dart-file> [<options>]
+Usage: dart2native_cross <main-dart-file> [<options>]
 
 Generates an executable or an AOT snapshot from <main-dart-file>.
 ''');
@@ -144,7 +144,7 @@ Future<void> main(List<String> args) async {
   final ArgParser parser = ArgParser(usageLineLength: outputLineWidth)
     ..addMultiOption('define', abbr: 'D', valueHelp: 'key=value', help: '''
 Set values of environment variables. To specify multiple variables, use multiple options or use commas to separate key-value pairs.
-E.g.: dart2native -Da=1,b=2 main.dart''')
+E.g.: dart2native_cross -Da=1,b=2 main.dart''')
     ..addFlag('enable-asserts',
         negatable: false, help: 'Enable assert statements.')
     ..addFlag('help',
@@ -162,6 +162,7 @@ E.g.: dart2native -Da=1,b=2 main.dart''')
     )
     ..addOption(
       'os',
+      abbr: 't',
       allowed: ['host', 'windows', 'linux', 'macos', 'android'],
       defaultsTo: 'host',
       valueHelp: 'host|windows|linux|macos|android',
@@ -171,15 +172,15 @@ E.g.: dart2native -Da=1,b=2 main.dart''')
       abbr: 'a',
       allowed: ['host', 'arm', 'arm64', 'ia32', 'x64'],
       defaultsTo: 'host',
-      valueHelp: 'host|windows|linux|macos|android',
+      valueHelp: 'host|arm|arm64|ia32|x64',
     )
     ..addOption('output', abbr: 'o', valueHelp: 'path', help: '''
 Set the output filename. <path> can be relative or absolute.
-E.g.: dart2native main.dart -o ../bin/my_app.exe
+E.g.: dart2native_cross main.dart -o ../bin/my_app.exe
 ''')
     ..addOption('packages', abbr: 'p', valueHelp: 'path', help: '''
 Get package locations from the specified file instead of .packages. <path> can be relative or absolute.
-E.g.: dart2native --packages=/tmp/pkgs main.dart
+E.g.: dart2native_cross --packages=/tmp/pkgs main.dart
 ''')
     ..addFlag('verbose',
         abbr: 'v', negatable: false, help: 'Show verbose output.');
