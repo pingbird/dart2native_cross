@@ -45,6 +45,9 @@ void main() async {
     path.dirname(Platform.script.path), ".."
   ));
 
+  print("Output dir: $outDir");
+  print("Script dir: $scriptDir");
+
   try {
     await Directory(path.join(scriptDir, "tools")).delete(recursive: true);
     await Directory(path.join(scriptDir, "artifacts")).delete(recursive: true);
@@ -53,8 +56,8 @@ void main() async {
   Future<void> copy(List<String> from, List<String> to) async {
     var fPath = path.joinAll([outDir, ...from]);
     var tPath = path.joinAll([scriptDir, ...to, from.last]);
-    await Directory(path.dirname(tPath)).create(recursive: true);
     print("Copying '$fPath' to '$tPath'");
+    await Directory(path.dirname(tPath)).create(recursive: true);
     await File(fPath).copy(tPath);
   }
 
