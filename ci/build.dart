@@ -34,8 +34,11 @@ void main() async {
   await build("x64", "gen_snapshot copy_dartaotruntime");
   await build("simarm", "gen_snapshot");
   await build("simarm64", "gen_snapshot");
-  await build("arm", "copy_dartaotruntime");
-  await build("arm64", "copy_dartaotruntime");
+  
+  if (!Platform.isWindows) {
+    await build("arm", "copy_dartaotruntime");
+    await build("arm64", "copy_dartaotruntime");
+  }
 
   var outDir = path.join(sdkDir, "out");
   var scriptDir = path.canonicalize(path.join(
