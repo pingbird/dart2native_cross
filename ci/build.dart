@@ -71,7 +71,7 @@ void main() async {
 
     if (!Platform.isWindows)
       copy(["ProductXARM", strip, "dartaotruntime"], ["artifacts", "linux-arm"]),
-    copy(["ProductSIMAR", strip, "gen_snapshot$ext"], ["tools", host, "linux-arm"]),
+    copy(["ProductSIMARM", strip, "gen_snapshot$ext"], ["tools", host, "linux-arm"]),
 
     if (!Platform.isWindows)
       copy(["ProductXARM64", strip, "dartaotruntime"], ["artifacts", "linux-arm64"]),
