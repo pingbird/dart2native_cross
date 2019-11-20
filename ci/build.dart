@@ -65,15 +65,15 @@ void main() async {
   var ext = Platform.isWindows ? ".exe" : "";
 
   await Future.wait([
-    copy(["ProductX64/exe.stripped", "dartaotruntime$ext"], ["artifacts", host]),
-    copy(["ProductX64/exe.stripped", "gen_snapshot$ext"], ["tools", host, host]),
+    copy(["ProductX64", "exe.stripped", "dartaotruntime$ext"], ["artifacts", host]),
+    copy(["ProductX64", "exe.stripped", "gen_snapshot$ext"], ["tools", host, host]),
 
     if (!Platform.isWindows)
-      copy(["ProductXARM/exe.stripped", "dartaotruntime"], ["artifacts/linux-arm"]),
-    copy(["ProductSIMARM/exe.stripped", "gen_snapshot$ext"], ["tools", host, "linux-arm"]),
+      copy(["ProductXARM", "exe.stripped", "dartaotruntime"], ["artifacts", "linux-arm"]),
+    copy(["ProductSIMAR", "exe.stripped", "gen_snapshot$ext"], ["tools", host, "linux-arm"]),
 
     if (!Platform.isWindows)
-      copy(["ProductXARM64/exe.stripped", "dartaotruntime"], ["artifacts/linux-arm64"]),
-    copy(["ProductSIMARM64/exe.stripped", "gen_snapshot$ext"], ["tools", host, "linux-arm64"]),
+      copy(["ProductXARM64", "exe.stripped", "dartaotruntime"], ["artifacts", "linux-arm64"]),
+    copy(["ProductSIMARM64", "exe.stripped", "gen_snapshot$ext"], ["tools", host, "linux-arm64"]),
   ]);
 }
