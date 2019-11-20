@@ -34,7 +34,7 @@ void main() async {
   await build("x64", "gen_snapshot copy_dartaotruntime");
   await build("simarm", "gen_snapshot");
   await build("simarm64", "gen_snapshot");
-  
+
   if (!Platform.isWindows) {
     await build("arm", "copy_dartaotruntime");
     await build("arm64", "copy_dartaotruntime");
@@ -54,6 +54,7 @@ void main() async {
     var fPath = path.joinAll([outDir, ...from]);
     var tPath = path.joinAll([scriptDir, ...to, from.last]);
     await Directory(path.dirname(tPath)).create(recursive: true);
+    print("Copying '$fPath' to '$tPath'");
     await File(fPath).copy(tPath);
   }
 
