@@ -59,7 +59,7 @@ tools/build.py -a simarm -m product gen_snapshot
 # ARMv8 / A64
 tools/build.py -a simarm64 -m product gen_snapshot
 ```
-If you are on Windows host you have to install the Dart SDK separately on a Linux machine in order to build dartaotruntime (it can be done your ARM target machine)
+If you are on Windows host you have to install the Dart SDK separately on a Linux machine in order to build dartaotruntime. (it can be done by your ARM target machine)
 ```
 # ARMv7 / A32
 tools/build.py -a arm -m product copy_dartaotruntime

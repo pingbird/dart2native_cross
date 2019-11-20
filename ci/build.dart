@@ -13,7 +13,8 @@ void main() async {
   var sdkDir = env["DART_SDK"];
 
   Future<void> build(String arch, String targets) async {
-    var proc = await Process.start(path.join(sdkDir, "tools", "build.py"), [
+    var proc = await Process.start("python", [
+      path.join(sdkDir, "tools", "build.py"),
       "-m", "product", "-a", arch, ...targets.split(" "),
     ], workingDirectory: sdkDir);
 
