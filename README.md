@@ -29,13 +29,14 @@ tools/windows-x64/linux-arm/gen_snapshot.exe
 
 ## Install
 
-Requires Dart 2.7.0, 
+Requires Dart 2.7.0.
 
 Either follow the build instructions below or use a prebuilt one from [releases](https://github.com/PixelToast/dart2native_cross/releases).
 
-And then run the following to activate it:
+And then run the following to install it:
 
 ```
+pub get
 pub global activate --source path .
 ```
 
@@ -69,10 +70,13 @@ tools/build.py -a arm64 -m product copy_dartaotruntime
 
 Then copy the output binaries to dart2native_cross:
 ```
-# From host
-sdk/out/ProductSIMARM/exe.stripped/gen_snapshot[.exe] -> dart2native_cross/tools/<host>/arm-linux/gen_snapshot[.exe]
-sdk/out/ProductSIMARM64/exe.stripped/gen_snapshot[.exe] -> dart2native_cross/tools/<host>/arm-linux64/gen_snapshot[.exe]
-# From linux
+# From windows host
+sdk/out/ProductSIMARM/gen_snapshot.exe -> dart2native_cross/tools/windows-x64/arm-linux/gen_snapshot.exe
+sdk/out/ProductSIMARM64/gen_snapshot.exe -> dart2native_cross/tools/windows-x64/arm-linux64/gen_snapshot.exe
+# From linux host
+sdk/out/ProductSIMARM/exe.stripped/gen_snapshot -> dart2native_cross/tools/linux-x64/arm-linux/gen_snapshot
+sdk/out/ProductSIMARM64/exe.stripped/gen_snapshot -> dart2native_cross/tools/linux-x64/arm-linux64/gen_snapshot
+# From linux host or target
 sdk/out/ProductARM/exe.stripped/dartaotruntime -> dart2native_cross/artifacts/arm-linux/dartaotruntime
 sdk/out/ProductARM64/exe.stripped/dartaotruntime -> dart2native_cross/artifacts/arm-linux64/dartaotruntime
 ```
