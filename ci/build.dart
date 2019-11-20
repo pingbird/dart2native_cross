@@ -41,11 +41,10 @@ void main() async {
   }
 
   var outDir = path.join(sdkDir, "out");
-  var scriptDir = path.canonicalize(path.join(
+  var scriptDir = path.normalize(path.join(
     path.dirname(Platform.script.path), ".."
   ));
-
-  print("Script uri: ${Platform.script}");
+  
   print("Script path: ${Platform.script.path}");
   print("Output dir: $outDir");
   print("Script dir: $scriptDir");
