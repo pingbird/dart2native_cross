@@ -12,16 +12,22 @@ void main() async {
 
   var sdkDir = env["DART_SDK"];
 
-  Future<void> build(String arch, String targets) async {
-    var proc = await Process.start("python", [
-      path.join(sdkDir, "tools", "build.py"),
-      "-m", "product", "-a", arch, ...targets.split(" "),
-    ], workingDirectory: sdkDir);
+  Future<void> build(String platform, String targets) async {
+    var args = [
+      "-C", path.join("out", platform),
+      "-v", ...targets.split(" "),
+    ];
+
+    print("ninja ${args.join(" ")}");
+
+    var proc = await Process.start("ninja", args, workingDirectory: sdkDir);
 
     proc.stderr.transform(Utf8Decoder()).listen(stderr.write);
     proc.stdout.transform(Utf8Decoder()).listen(stdout.write);
 
-    if (await proc.exitCode != 0) {
+    var exitCode = await proc.exitCode;
+    if (exitCode != 0) {
+      print("ninja failed with exit code $exitCode");
       exit(1);
     }
   }
@@ -31,13 +37,13 @@ void main() async {
       .firstMatch(Platform.version).group(1);
   var host = "$hostOS-$hostArch";
 
-  await build("x64", "gen_snapshot copy_dartaotruntime");
-  await build("simarm", "gen_snapshot");
-  await build("simarm64", "gen_snapshot");
+  await build("ProductX64", "gen_snapshot copy_dartaotruntime");
+  await build("ProductSIMARM", "gen_snapshot");
+  await build("ProductSIMARM64", "gen_snapshot");
 
   if (!Platform.isWindows) {
-    await build("arm", "copy_dartaotruntime");
-    await build("arm64", "copy_dartaotruntime");
+    await build("ProductXARM", "copy_dartaotruntime");
+    await build("ProductXARM64", "copy_dartaotruntime");
   }
 
   var outDir = path.join(sdkDir, "out");
@@ -63,18 +69,19 @@ void main() async {
   }
 
   var ext = Platform.isWindows ? ".exe" : "";
-  var strip = Platform.isWindows ? "" : "exe.stripped";
+  var gensnapshot = "gen_snapshot$ext";
+  var aotruntime = ["dart-sdk", "bin", "dartaotruntime"];
 
   await Future.wait([
-    copy(["ProductX64", strip, "dartaotruntime$ext"], ["artifacts", host]),
-    copy(["ProductX64", strip, "gen_snapshot$ext"], ["tools", host, host]),
+    copy(["ProductX64", ...aotruntime], ["artifacts", host]),
+    copy(["ProductX64", gensnapshot], ["tools", host, host]),
 
     if (!Platform.isWindows)
-      copy(["ProductXARM", strip, "dartaotruntime"], ["artifacts", "linux-arm"]),
-    copy(["ProductSIMARM", strip, "gen_snapshot$ext"], ["tools", host, "linux-arm"]),
+      copy(["ProductXARM", ...aotruntime], ["artifacts", "linux-arm"]),
+    copy(["ProductSIMARM", gensnapshot], ["tools", host, "linux-arm"]),
 
     if (!Platform.isWindows)
-      copy(["ProductXARM64", strip, "dartaotruntime"], ["artifacts", "linux-arm64"]),
-    copy(["ProductSIMARM64", strip, "gen_snapshot$ext"], ["tools", host, "linux-arm64"]),
+      copy(["ProductXARM64", ...aotruntime], ["artifacts", "linux-arm64"]),
+    copy(["ProductSIMARM64", gensnapshot], ["tools", host, "linux-arm64"]),
   ]);
 }
