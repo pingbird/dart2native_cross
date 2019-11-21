@@ -73,7 +73,7 @@ void main() async {
   var aotruntime = ["dart-sdk", "bin", "dartaotruntime"];
 
   await Future.wait([
-    copy(["ProductX64", ...aotruntime], ["artifacts", host]),
+    copy(["ProductX64", "dart-sdk", "bin", "dartaotruntime$ext"], ["artifacts", host]),
     copy(["ProductX64", gensnapshot], ["tools", host, host]),
 
     if (!Platform.isWindows)
