@@ -56,29 +56,29 @@ if you are looking for x64 Linux to Windows or vise versa you are out of luck fo
 For ARM Linux targets on an x64 host run the following commands: 
 ```
 # ARMv7 / A32
-tools/build.py -a simarm -m product gen_snapshot
+tools/build.py -a simarm -m product dart-sdk/bin/gen_snapshot
 # ARMv8 / A64
-tools/build.py -a simarm64 -m product gen_snapshot
+tools/build.py -a simarm64 -m product dart-sdk/bin/gen_snapshot
 ```
 If you are on a Windows host you have to install the Dart SDK separately on a Linux machine in order to build dartaotruntime. (it can be done by your ARM target machine)
 ```
 # ARMv7 / A32
-tools/build.py -a arm -m product copy_dartaotruntime
+tools/build.py -a arm -m product dart-sdk/bin/dartaotruntime
 # ARMv8 / A64
-tools/build.py -a arm64 -m product copy_dartaotruntime
+tools/build.py -a arm64 -m product dart-sdk/bin/dartaotruntime
 ```
 
 Then copy the output binaries to dart2native_cross:
 ```
 # From windows host
-sdk/out/ProductSIMARM/gen_snapshot.exe -> dart2native_cross/tools/windows-x64/arm-linux/gen_snapshot.exe
-sdk/out/ProductSIMARM64/gen_snapshot.exe -> dart2native_cross/tools/windows-x64/arm-linux64/gen_snapshot.exe
+sdk/out/ProductSIMARM/dart-sdk/bin/gen_snapshot.exe -> dart2native_cross/tools/windows-x64/arm-linux/gen_snapshot.exe
+sdk/out/ProductSIMARM64/dart-sdk/bin/gen_snapshot.exe -> dart2native_cross/tools/windows-x64/arm-linux64/gen_snapshot.exe
 # From linux host
-sdk/out/ProductSIMARM/exe.stripped/gen_snapshot -> dart2native_cross/tools/linux-x64/arm-linux/gen_snapshot
-sdk/out/ProductSIMARM64/exe.stripped/gen_snapshot -> dart2native_cross/tools/linux-x64/arm-linux64/gen_snapshot
+sdk/out/ProductSIMARM/dart-sdk/bin/gen_snapshot -> dart2native_cross/tools/linux-x64/arm-linux/gen_snapshot
+sdk/out/ProductSIMARM64/dart-sdk/bin/gen_snapshot -> dart2native_cross/tools/linux-x64/arm-linux64/gen_snapshot
 # From linux host or target
-sdk/out/ProductARM/exe.stripped/dartaotruntime -> dart2native_cross/artifacts/arm-linux/dartaotruntime
-sdk/out/ProductARM64/exe.stripped/dartaotruntime -> dart2native_cross/artifacts/arm-linux64/dartaotruntime
+sdk/out/ProductARM/dart-sdk/bin/dartaotruntime -> dart2native_cross/artifacts/arm-linux/dartaotruntime
+sdk/out/ProductARM64/dart-sdk/bin/dartaotruntime -> dart2native_cross/artifacts/arm-linux64/dartaotruntime
 ```
 Where `<host>` is your host `windows-x64`/`linux-x64`/`macos-x64`
 
